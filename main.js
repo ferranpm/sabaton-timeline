@@ -48,10 +48,14 @@ function drawPlot(tracks) {
       clickable: true
     },
     xaxis: {
+      min: (new Date('-000500-01-01')).getTime(),
+      max: (new Date('2100-01-01')).getTime(),
       panRange: [(new Date('-000500-01-01')).getTime(), (new Date('2100-01-01')).getTime()],
       tickFormatter: dateFormatter
     },
     yaxis: {
+      min: -1,
+      max: albums.length,
       zoomRange: false,
       panRange: [-1, albums.length],
       show: true,
