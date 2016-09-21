@@ -17,15 +17,17 @@ if (!Array.prototype.flatten) {
 function renderTrack(track) {
   return `<table>
     <tr><td style="font-weight: bold;">Name:</td><td>${track.name}</td></tr>
-    <tr><td style="font-weight: bold;">Album:</td><td>${track.album}</td></tr>
+    <tr><td style="font-weight: bold;">Album:</td><td>${track.album.name}</td></tr>
     <tr><td style="font-weight: bold;">Subject:</td><td>${track.subject}</td></tr>
-    <tr><td style="font-weight: bold;">Date:</td><td>${dateFormatter(track.date.getTime())}</td></tr>
+    <tr><td style="font-weight: bold;">Date:</td><td>${dateFormatter(track.date)}</td></tr>
     <tr><td style="font-weight: bold;">Wiki:</td><td><a href="${track.wiki}">${track.wiki}</td></tr>
     </table>`;
 }
 
 function dateFormatter(value, axis) {
-  return (new Date(value)).toLocaleDateString({ year: 'numeric', month: 'numeric', day: 'numeric' });
+  let options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+  if (value && value.constructor === Date) value.toLocaleDateString(options);
+  return (new Date(value)).toLocaleDateString(options);
 }
 
 let albums = contents.albums.map(album => album.name);
@@ -35,7 +37,7 @@ function albumFormatter(value, axis) {
 }
 
 function drawPlot(tracks) {
-  let points = tracks.map(track => [track.date.getTime(), albums.indexOf(track.album), track]);
+  let points = tracks.map(track => [track.date.getTime(), albums.indexOf(track.album.name), track]);
   let placeholder = $('#placeholder');
   let plot = $.plot(placeholder, [points], {
     series: {
@@ -70,8 +72,8 @@ function drawPlot(tracks) {
     display: 'none',
     border: '1px solid #fdd',
     padding: '2px',
-    'background-color': '#fee',
-    opacity: 0.80
+    'background-color': '#fafafa',
+    opacity: 0.6
   }).appendTo('body');
 
   placeholder.bind('plothover', function(event, pos, item) {
@@ -87,34 +89,59 @@ function drawPlot(tracks) {
   placeholder.bind('plotclick', function(event, pos, item) {
     if (item) {
       let track = tracks[item.dataIndex];
-      $('#songInfo').html(renderTrack(track));
+      setSongInfo(track);
     }
   });
 
 }
 
+function setSongInfo(track) {
+  $('#songInfo').html(renderTrack(track));
+}
+
+let songs = parseDiscography(contents);
+
+function parseDiscography(discography) {
+
+  // Put album info in track objects
+  let albums = discography.albums.map(album => {
+    if (!album || !album.tracks) {
+      return;
+    }
+    album.tracks = album.tracks.map(track => {
+      if (!track) {
+        return;
+      }
+      track.album = album;
+      return track;
+    });
+    return album;
+  });
+
+  return albums
+    .filter(album => album)
+    .map(album => album.tracks)
+    .flatten();
+}
+
 $(document).ready(() => {
-  Promise.resolve(contents)
-    .then(json => json.albums)
-    .then(albums => {
-      return albums.map(album => {
-        if (!album || !album.tracks) {
-          return;
-        }
-        album.tracks = album.tracks.map(track => {
-          if (!track) {
-            return;
-          }
-          track.album = album.name;
-          return track;
-        });
-        return album;
-      });
-    })
-    .then(albums => albums.filter(album => album))
-    .then(albums => albums.map(album => album.tracks))
-    .then(albums => albums.flatten())
-    .then(tracks => tracks.filter(track => track && track.date))
-    .then(drawPlot)
-    .catch(console.error);
+  drawPlot(songs.filter(track => track.date));
 });
+
+function initMap() {
+  let map = new google.maps.Map(document.getElementById('map'), {
+    center: { lat: 0, lng: 0 },
+    zoom: 2
+  });
+
+  let tracks = songs.filter(song => song.position);
+
+  tracks.forEach(track => {
+    let marker = new google.maps.Marker({
+      position: track.position,
+      map: map,
+      title: track.name
+    });
+    marker.addListener('click', setSongInfo.bind(null, track));
+  });
+}

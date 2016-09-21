@@ -8,7 +8,11 @@ let contents = {
         {
           "name": "Primo Victoria",
           "subject": "Operation Overlord",
-          "date": new Date("1944-06-06")
+          "date": new Date("1944-06-06"),
+          "position": {
+            "lat": 49.7247897,
+            "lng": -1.9313915
+          }
         },
         {
           "name": "Reign of Terror",
@@ -353,7 +357,11 @@ let contents = {
           "name": "Sparta",
           "subject": "Battle of Thermopylae",
           "wiki": "https://en.wikipedia.org/wiki/Battle_of_Thermopylae",
-          "date": new Date("-000480-08-20")
+          "date": new Date("-000480-08-20"),
+          "position": {
+            "lat": 38.7993957,
+            "lng": 22.5439554
+          }
         },
         {
           "name": "Last Dying Breath",
@@ -361,7 +369,11 @@ let contents = {
         },
         {
           "name": "Blood of Bannockburn",
-          "subject": "Battle of Bannockburn"
+          "subject": "Battle of Bannockburn",
+          "position": {
+            "lat": 56.0917202,
+            "lng": -3.9085366
+          }
         },
         {
           "name": "Diary of an Unknown Soldier",
@@ -389,7 +401,11 @@ let contents = {
           "name": "Shiroyama",
           "subject": "Battle of Shiroyama",
           "wiki": "https://en.wikipedia.org/wiki/Battle_of_Shiroyama",
-          "date": new Date("1877-09-24")
+          "date": new Date("1877-09-24"),
+          "position": {
+            "lat": 35.2557992,
+            "lng": 139.1489477
+          }
         },
         {
           "name": "Winged Hussars",
