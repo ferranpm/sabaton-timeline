@@ -121,7 +121,7 @@ let contents = {
           "name": "Ghost Division",
           "subject": "Erwin Rommel and the 7th Panzer Division",
           "date": new Date("1940-05-01"),
-          "wiki": "https://en.wikipedia.org/wiki/Battle_of_Wizna"
+          "wiki": "https://en.wikipedia.org/wiki/7th_Panzer_Division_%28Wehrmacht%29"
         },
         {
           "name": "The Art of War",
@@ -132,7 +132,11 @@ let contents = {
           "name": "40:1",
           "subject": "The Battle of Wizna",
           "date": new Date("1939-09-07"),
-          "wiki": "https://en.wikipedia.org/wiki/Battle_of_Wizna"
+          "wiki": "https://en.wikipedia.org/wiki/Battle_of_Wizna",
+          "position": {
+            "lat": 53.1885963,
+            "lng": 22.3589274
+          }
         },
         {
           "name": "Unbreakable",
@@ -201,7 +205,12 @@ let contents = {
         {
           "name": "Screaming Eagles",
           "subject": "About the 101st Airborne Division and the Siege of Bastogne",
-          "date": new Date("1944-12-20")
+          "date": new Date("1944-12-20"),
+          "wiki": "https://en.wikipedia.org/wiki/Siege_of_Bastogne",
+          "position": {
+            "lat": 50.0118023,
+            "lng": 5.6896453
+          }
         },
         {
           "name": "The Final Solution",
@@ -249,7 +258,11 @@ let contents = {
         {
           "name": "Gott Mit Uns (God With Us)",
           "subject": "The battle of Breitenfeld",
-          "date": new Date("1631-09-07")
+          "date": new Date("1631-09-07"),
+          "position": {
+            "lat": 51.4064791,
+            "lng": 12.330850
+          }
         },
         {
           "name": "A Lifetime of War",
@@ -260,7 +273,11 @@ let contents = {
           "name": "1648",
           "subject": "The battle of Prague",
           "wiki": "https://en.wikipedia.org/wiki/Battle_of_Prague_(1648)",
-          "date": new Date("1648-06-25")
+          "date": new Date("1648-06-25"),
+          "position": {
+            "lat": 50.0595853,
+            "lng": 14.3255428
+          }
         },
         {
           "name": "The Carolean's Prayer",
@@ -274,7 +291,11 @@ let contents = {
         {
           "name": "Killing Ground",
           "subject": "The battle of Fraustadt",
-          "date": new Date("1706-02-02")
+          "date": new Date("1706-02-02"),
+          "position": {
+            "lat": 50.7734,
+            "lng": 13.7886113
+          }
         },
         {
           "name": "Poltava",
@@ -300,7 +321,8 @@ let contents = {
         {
           "name": "Night Witches",
           "subject": "The all female Soviet 588th Night Bomber Regiment called \"Night Witches\"",
-          "date": new Date("1941-10-08")
+          "date": new Date("1941-10-08"),
+          "wiki": "https://en.wikipedia.org/wiki/Night_Witches"
         },
         {
           "name": "No Bullets Fly",
