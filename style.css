@@ -2,15 +2,34 @@
 @import 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
 
 body {
-    margin: 0 auto;
-    max-width: 50em;
+    margin: 0;
+    padding: 0;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     color: #555;
     line-height: 1.5;
 }
 
+header {
+    background-image: url("http://98b7695aa5bb76e7839227ab.skydustproductio.netdna-cdn.com/wp-content/uploads/2016/09/Header-1.jpg");
+    background-color: #263d36;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    line-height: 1.2;
+    padding: 2em;
+    padding-top: 20vw;
+    text-align: center;
+}
+
+main {
+    margin: 0 auto;
+    max-width: 75%;
+}
+
 h1 {
-    color: #333;
+    color: white;
+    font-size: 2.5em;
+    font-weight: 500;
 }
 
 a {
