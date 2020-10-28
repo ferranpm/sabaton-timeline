@@ -16,11 +16,11 @@ if (!Array.prototype.flatten) {
 
 function renderTrack(track) {
   return `<table>
-    <tr><td style="font-weight: bold;">Name:</td><td>${track.name}</td></tr>
-    <tr><td style="font-weight: bold;">Album:</td><td>${track.album.name}</td></tr>
-    <tr><td style="font-weight: bold;">Subject:</td><td>${track.subject}</td></tr>
-    <tr><td style="font-weight: bold;">Date:</td><td>${dateFormatter(track.date)}</td></tr>
-    <tr><td style="font-weight: bold;">Wiki:</td><td><a href="${track.wiki}">${track.wiki}</td></tr>
+    <tr><th>Name:</th><td>${track.name}</td></tr>
+    <tr><th>Album:</th><td>${track.album.name}</td></tr>
+    <tr><th>Subject:</th><td>${track.subject}</td></tr>
+    <tr><th>Date:</th><td>${dateFormatter(track.date)}</td></tr>
+    <tr><th>Wiki:</th><td><a href="${track.wiki}">${track.wiki}</td></tr>
     </table>`;
 }
 
