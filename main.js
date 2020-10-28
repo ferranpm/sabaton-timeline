@@ -126,22 +126,66 @@ function parseDiscography(discography) {
 
 $(document).ready(() => {
   drawPlot(songs.filter(track => track.date));
+  initMap();
 });
 
-function initMap() {
-  let map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: 0, lng: 0 },
-    zoom: 2
-  });
+function createPopup(feature) {
+  const map = feature.layer.map;
+  feature.popup = new OpenLayers.Popup.FramedCloud(
+    "pop",
+    feature.geometry.getBounds().getCenterLonLat(),
+    null,
+    feature.attributes.html,
+    null,
+    true
+  );
+  map.addPopup(feature.popup);
+}
 
+function destroyPopup(feature) {
+  feature.popup.destroy();
+  feature.popup = null;
+}
+
+function initMap() {
   let tracks = songs.filter(song => song.position);
 
+  const map = new OpenLayers.Map("map");
+  map.addLayer(new OpenLayers.Layer.OSM());
+
+  const epsg4326 =  new OpenLayers.Projection("EPSG:4326"); // WGS 1984 projection
+  const projectTo = map.getProjectionObject(); // The map projection (Spherical Mercator)
+
+  const lonLat = new OpenLayers.LonLat(25, 40).transform(epsg4326, projectTo);
+  const zoom = 3;
+  map.setCenter(lonLat, zoom);
+
+  const vectorLayer = new OpenLayers.Layer.Vector("Overlay");
+
+  const markerHeight = 879/30;
+  const markerWidth = 586/30;
+  const markerProps = {
+    externalGraphic: 'img/marker.png',
+    graphicWidth: markerWidth,
+    graphicHeight: markerHeight,
+    graphicXOffset: -markerWidth/2,
+    graphicYOffset: -markerHeight
+  };
+
   tracks.forEach(track => {
-    let marker = new google.maps.Marker({
-      position: track.position,
-      map: map,
-      title: track.name
-    });
-    marker.addListener('click', setSongInfo.bind(null, track));
+    const feature = new OpenLayers.Feature.Vector(
+      new OpenLayers.Geometry.Point(track.position.lng, track.position.lat).transform(epsg4326, projectTo),
+      { html: renderTrack(track) },
+      markerProps
+    );
+    vectorLayer.addFeatures(feature);
   });
+  map.addLayer(vectorLayer);
+
+  const controls = {
+    selector: new OpenLayers.Control.SelectFeature(vectorLayer, { onSelect: createPopup, onUnselect: destroyPopup })
+  };
+
+  map.addControl(controls['selector']);
+  controls.selector.activate();
 }
